@@ -1,0 +1,19 @@
+<div class="col-md-6">
+    <div class="panel panel-primary">
+        <div class="pannel-heading"><span>Authentification</span></div>
+        <div class="panel-body">
+            <form #f="ngForm" (ngSubmit)="login(f.value)">
+                <div class="form-group">
+                    <label class="control-label" for="userName">Nom d'utilisateur :</label>
+                    <input type="text" placeholder="username" name="userName" ngModel class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="passWord">Mot de passe :</label>
+                    <input type="text" placeholder="password" name="password" ngModel class="form-control">
+                </div>
+                <button class="btn btn-primary" type="submit">Se connecter</button>
+            </form>
+
+        </div>
+    </div>
+</div>

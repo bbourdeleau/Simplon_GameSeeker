@@ -1,0 +1,49 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <form>
+                <fieldset>
+                    <legend class="text-center">Ajoutez un jeu à la base de donnée</legend>
+
+                    <div class="form-group">
+                        <label for="name"><span class="req">* </span> Nom du jeu : </label>
+                        <input required type="text" [(ngModel)]="game.name" name="name" id="name"
+                            class="form-control phone" maxlength="28" placeholder="Enter the name of the game" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="firstname"><span class="req">* </span> Entrez le plus de tags possible :</label>
+                        <input class="form-control" type="text" [(ngModel)]="game.genre" name="genre" id="txt" required
+                            placeholder="Enter the most tags possible" />
+                        <div id="errFirst"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastname"><span class="req">* </span> Dévelopé par : </label>
+                        <input class="form-control" type="text" [(ngModel)]="game.creator" name="creator" id="txt"
+                            placeholder="Enter enter the dev team" required />
+                        <div id="errLast"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastname"><span class="req">* </span> Prix : </label>
+                        <input class="form-control" type="number" [(ngModel)]="game.price" name="price" id="number"
+                            placeholder="0" required />
+                        <div id="errLast"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastname"><span class="req">* </span> Télécharger la photo : </label>
+                        <input class="form-control" type="text" />
+                    </div>
+
+                    <div class="form-group">
+                        <input class="btn btn-success" type="submit" name="submit_reg" value="register" (click)="addGame()">
+                    </div>
+                </fieldset>
+            </form><!-- ends register form -->
+            <!-- second for to fiter user-->
+        </div><!-- ends col-6 -->
+
+    </div>
+</div>

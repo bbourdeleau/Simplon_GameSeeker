@@ -1,0 +1,146 @@
+<div class="nav-bar">
+    <div class="nav">
+        <span>Recherchez votre jeu : </span>
+    </div>
+
+    <form [formGroup]="SearchForm" (ngSubmit)="SearchForm.valid && Search(research)">
+        <input id="searcher" [(ngModel)]="research" pInputText formControlName="research" type="text" placeholder="research">
+        <input (click)="Search(research)" type="submit" value="Submit">
+      </form>
+</div>
+    
+    
+    <div *ngIf="game" class="wrapper">
+
+	    <h2><strong>Tous les jeux ( x )<span></span></strong></h2>
+
+	    <div class="cards">
+
+		    <figure (click)="selectGame(g)" *ngFor="let g of game._embedded.gameses"  class="card" data-toggle="modal" data-target="#my-modal">
+
+			    <img alt="{{g.name}}"  src="{{this.gameService.host+'/gamePhoto/'+g.id+'?ts='+getTS()}}" />
+
+			    <figcaption>{{g.name}}</figcaption>
+
+		    </figure>
+
+        </div>
+    </div>
+
+
+
+    <div *ngIf="(userService.isAdmin())"   class="container d-flex justify-content-center"> 
+        <div id="my-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered justify-content-center " role="document">
+                <div class="modal-content border-0 mx-3">
+                    <div class="modal-body p-0">
+                        <div class="card border-0">
+                            <div class="card-header pb-0 bg-white">
+                                <div class="row">
+                                    <div class="col-10">
+                                        <h5 class="font-weight-bold mt-2">Modifiez les données liés au jeu : </h5>
+                                    </div>
+                                    <div class="col-2 my-auto"> <span class="text-right"><button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></span></div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <form>
+                                            <fieldset>                         
+                                                <div class="form-group">
+                                                    <h5 for="name">Modifiez le nom du jeu : </h5>
+                                                    <p>Déjà présent : </p>
+                                                    <p>{{selectedGame.name}}</p>
+                                                    <input required type="text" [(ngModel)]="games.name" name="name" id="name"
+                                                        class="form-control phone" maxlength="28" value="selectedGame.name" />
+                                                </div>
+                            
+                                                <div class="form-group">
+                                                    <h5 for="firstname">Modifiez les tags associés :</h5>
+                                                    <p>Déjà présent : </p>
+                                                    <p>{{selectedGame.genre}}</p>
+                                                    <input class="form-control" type="text" [(ngModel)]="games.genre" name="genre" id="txt" required
+                                                      value="selectedGame.genre" />
+                                                    <div id="errFirst"></div>
+                                                </div>
+                            
+                                                <div class="form-group">
+                                                    <h5 for="lastname">Dévelopé par : </h5>
+                                                    <p>Déjà présent : </p>
+                                                    <p>{{selectedGame.creator}}</p>
+                                                    <input class="form-control" type="text" [(ngModel)]="games.creator" name="creator" id="txt"
+                                                    value="selectedGame.creator" required />
+                                                    <div id="errLast"></div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <h5 for="lastname">Prix : </h5>
+                                                    <p>Déjà présent : </p>
+                                                    <p>{{selectedGame.price}}</p>
+                                                    <input class="form-control" type="text" [(ngModel)]="games.price" name="price" id="int"
+                                                    value="selectedGame.price" required />
+                                                    <div id="errLast"></div>
+                                                </div>
+                            
+                                                <div class="form-group">
+                                                    <p>Télécharger la photo :* </p> 
+                                                    <input class="form-control" type="file" (change)="onSelectedFile($event)" />
+                                                </div>
+
+                                                <div class="row justify-content-center mt-4">
+                                                    <div class="col-6"><button type="button" class="btn btn-outline-success btn-block font-weight-bold text-dark" (click)="upload()" data-dismiss="modal">Mettre à jour</button></div>
+                                                    {{progress}}
+                                                </div>
+                                            </fieldset>
+                                         </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="(!userService.isAdmin())"   class="container d-flex justify-content-center"> 
+        <div id="my-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered justify-content-center " role="document">
+                <div class="modal-content border-0 mx-3">
+                    <div class="modal-body p-0">
+                        <div class="card border-0">
+                            <div class="card-header pb-0 bg-white">
+                                <div class="row">
+                                    <div class="col-10">
+                                        <h5 class="font-weight-bold mt-2">{{selectedGame.name}}</h5>
+                                    </div>
+                                    <div class="col-2 my-auto"> <span class="text-right"><button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <h5 class="font-weight-bold mt-2">Tags associés :</h5>
+                                        <p>{{selectedGame.genre}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <h5 class="font-weight-bold mt-2">Dévelopé par :</h5>
+                                        <p>{{selectedGame.creator}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <h5 class="font-weight-bold mt-2">Prix :</h5>
+                                        <p>{{selectedGame.price}}</p>
+                                    </div>
+                                </div>
+                            </div>
+        
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
